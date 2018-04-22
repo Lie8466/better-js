@@ -1,0 +1,38 @@
+{
+  "name": "better-js",
+  "version": "1.0.0",
+  "description": "for better js",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lie8466/better-js.git"
+  },
+  "keywords": [
+    "js",
+    "catch",
+    "error"
+  ],
+  "author": "Yawei Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lie8466/better-js/issues"
+  },
+  "homepage": "https://github.com/Lie8466/better-js#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "eslint": "^4.19.1",
+    "loadash": "^1.0.0",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5"
+  }
+}
