@@ -1,4 +1,37 @@
-var isFunction = function(what) {return typeof what === 'function';}
+function isFunction(what) {return typeof what === 'function';}
+
+function isUndefined(what) { return what === void 0;}
+
+function hasKey(object, key) { return Object.prototype.hasOwnProperty.call(object, key);}
+
+function each(obj, callback) {
+    var i, j;
+  
+    if (isUndefined(obj.length)) {
+      for (i in obj) {
+        if (hasKey(obj, i)) {
+          callback.call(null, i, obj[i]);
+        }
+      }
+    } else {
+      j = obj.length;
+      if (j) {
+        for (i = 0; i < j; i++) {
+          callback.call(null, i, obj[i]);
+        }
+      }
+    }
+}
+
+function objectMerge(obj1, obj2) {
+    if (!obj2) {
+        return obj1;
+    }
+    each(obj2, function(key, value) {
+        obj1[key] = value;
+    });
+    return obj1;
+}
 
 var handleWindowError = function (_window, config) {
     _oldWindowError = _window.onerror;
@@ -28,9 +61,22 @@ var handleWindowError = function (_window, config) {
     }
     
 }
+var handleRejectPromise = function (_window, config) {
+    _window.addEventListener('unhandledrejection', function (event) {
+        if (event) {
+            var reason = event.reason;
+            config.sendError({
+                title: 'unhandledrejection',
+                msg: reason,
+                category: 'js',
+                level: 'error'
+            });
+        }
+    }, true);
+}
 
 var handleResourceError = function (_window, config) {
-    _window.addEventList('error', function (event) {
+    _window.addEventListener('error', function (event) {
         if (event) {
             var target = event.target || event.srcElement;
             var isElementTarget = target instanceof HTMLScriptElement || target instanceof HTMLLinkElement || target instanceof HTMLImageElement;
@@ -92,7 +138,9 @@ var handleVueError = function (_window, config) {
 
 module.exports = {
     isFunction,
+    objectMerge,
     handleWindowError,
+    handleRejectPromise,
     handleConsoleError,
     handleResourceError,
     handleAjaxError,

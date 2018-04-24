@@ -7,21 +7,22 @@ var _window =
 
 var betterJs = _window.betterJs;
 if (!betterJs) {
-    var betterJs = {};
-    betterJs.prototype.init = function (options) {
+    var BetterJs = function () {};
+    var betterJs = new BetterJs();
+    betterJs.init = function (options) {
         var defaultConfig = {
             jsError: true,
             resourceError: true,
             ajaxError: true,
             consoleError: false, // console.error默认不处理
             scriptError: false, // 跨域js错误，默认不处理，因为没有任何信息
-            vue: true,
+            vue: false,
             autoReport: true,
             filters: [], // 过滤器，命中的不上报
             levels: ['info', 'warning', 'error'],
             category: ['js', 'resource', 'ajax']
         }
-        var config = _.merge(defaultConfig, options);
+        var config = utils.objectMerge(defaultConfig, options);
 
         if (!config.scriptError) {
             config.filters.push(function () {return /^Script error\.?$/.test(arguments[0]);})
@@ -51,10 +52,15 @@ if (!betterJs) {
 
         var _window = typeof window !== 'undefined' ? window
         : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+        var addEventListener = _window.addEventListener || _window.attachEvent;
         if (config.jsError) {
             utils.handleWindowError(_window, config);
         }
-        if (config.resourceError) {
+        if (config.jsError) {
+            // https://developer.mozilla.org/zh-CN/docs/Web/Events/unhandledrejection
+            utils.handleRejectPromise(_window, config);
+        }
+        if (config.resourceError && addEventListener) {
             utils.handleResourceError(_window, config);
         }
         if (config.ajaxError) {
@@ -70,3 +76,4 @@ if (!betterJs) {
 }
 
 _window.betterJs = betterJs;
+module.exports = betterJs;

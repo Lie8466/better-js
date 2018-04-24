@@ -4,7 +4,7 @@
   "description": "for better js",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "node test/main.js",
     "build": "webpack --mode=production"
   },
   "repository": {
@@ -25,14 +25,16 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
-    "eslint": "^4.19.1",
-    "loadash": "^1.0.0",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.14",
     "babel-preset-env": "^1.6.1",
+    "body-parser": "^1.18.2",
     "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "express": "^4.16.3",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-watch": "^0.5.8",
     "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^1.2.5"
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14"
   }
 }
