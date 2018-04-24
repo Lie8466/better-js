@@ -16,8 +16,8 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            error,
-                            date: new Date()
+                            date: new Date(),
+                            error
                         })
                     })
                     .then(res => {

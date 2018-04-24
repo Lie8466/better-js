@@ -1,7 +1,6 @@
 var express = require('express');
 var fs = require('fs');
 var app = express();
-var watch = require('node-watch');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -31,10 +30,6 @@ app.post('/sendError', function (req, res) {
 });
 
 app.use(express.static(__dirname + '/public'));
-
-watch(__dirname + '/', { recursive: true }, function(evt, name) {
-    console.log('%s changed.', name);
-  });
 
 var server = app.listen(3000, function () {
     var host = server.address().address;
