@@ -18,9 +18,10 @@ app.all('*', function(req, res, next) {
     else  next();
 });
 app.post('/sendError', function (req, res) {
+    // node接收错误信息，并将信息写进log.txt文件里面，模拟将错误信息上报到服务器
     var body = req.body;
     try {
-        var fd = fs.openSync('log.txt', 'a+');
+        var fd = fs.openSync('test/log.txt', 'a+');
         fs.appendFileSync(fd, JSON.stringify(body) + '\r\n=======\r\n');
         res.send({message: '成功'});
       } catch (err) {

@@ -1,2 +1,0 @@
-{"date":"2018-04-24T06:16:28.390Z","error":{"title":"SCRIPT","msg":"http://localhost:3000/test.js","category":"resource","level":"error"}}
-=======
