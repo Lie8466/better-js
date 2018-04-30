@@ -132,10 +132,10 @@ var handleAjaxError = function (_window, config) {
     _handleFetchError(_window, config);
 
     // 处理XMLHttpRequest
-    if (!window.XMLHttpRequest) {
+    if (!_window.XMLHttpRequest) {
         return;   
     } 
-    var xmlhttp = window.XMLHttpRequest;
+    var xmlhttp = _window.XMLHttpRequest;
     
     var _oldSend = xmlhttp.prototype.send;
     var _handleEvent = function (event) {
@@ -175,7 +175,7 @@ var handleConsoleError = function (_window, config) {
     if (!_window.console || !_window.console.error) return;
 
     var _oldConsoleError = _window.console.error;
-    window.console.error = function () {
+    _window.console.error = function () {
         config.sendError({
             title: 'consoleError',
             msg: JSON.stringify(arguments.join(',')),
@@ -187,7 +187,7 @@ var handleConsoleError = function (_window, config) {
 }
 
 var handleVueError = function (_window, config) {
-    var vue = window.Vue;
+    var vue = _window.Vue;
     if (!vue || !vue.config) return; // 没有找到vue实例
     var _oldVueError = vue.config.errorHandler;
 
