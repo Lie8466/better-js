@@ -93,8 +93,71 @@ var handleResourceError = function (_window, config) {
     }, true);
 }
 
-var handleAjaxError = function (_window, config) {
+var _handleFetchError = function (_window, config) {
+    if(!_window.fetch) return;
+    let _oldFetch = _window.fetch;
+    _window.fetch = function () {
+        return _oldFetch.apply(this, arguments)
+        .then(res => {
+            return res;
+        })
+        .catch(error => {
+            config.sendError({
+                title: arguments[0],
+                msg: JSON.stringify(error),
+                category: 'ajax',
+                level: 'error'
+            });
+            throw err;  
+        })
+    }
+}
 
+var handleAjaxError = function (_window, config) {
+    var protocol = _window.location.protocol;
+    if (protocol === 'file:') return;
+
+    // 处理fetch
+    _handleFetchError(_window, config);
+
+    // 处理XMLHttpRequest
+    if (!window.XMLHttpRequest) {
+        return;   
+    } 
+    var xmlhttp = window.XMLHttpRequest;
+    
+    var _oldSend = xmlhttp.prototype.send;
+    var _handleEvent = function (event) {
+        if (event && event.currentTarget && event.currentTarget.status !== 200) {
+            config.sendError({
+                title: event.target.responseURL,
+                msg: JSON.stringify({
+                    response: event.target.response,
+                    responseURL:  event.target.responseURL,
+                    status: event.target.status,
+                    statusText: event.target.statusText
+                }),
+                category: 'ajax',
+                level: 'error'
+            });
+        }
+    }
+    xmlhttp.prototype.send = function () {
+        if (this['addEventListener']) {
+            this['addEventListener']('error', _handleEvent);
+            this['addEventListener']('load', _handleEvent);
+            this['addEventListener']('abort', _handleEvent);
+        } else {
+            var _oldStateChange = this['onreadystatechange'];
+            this['onreadystatechange'] = function (event) {
+                if (this.readyState === 4) {
+                    _handleEvent(event);
+                }
+                _oldStateChange && _oldStateChange.apply(this, arguments);
+            };
+        }
+        return _oldSend.apply(this, arguments);
+    }
 }
 
 var handleConsoleError = function (_window, config) {
@@ -108,7 +171,7 @@ var handleConsoleError = function (_window, config) {
             category: 'js',
             level: 'error'
         });
-        _oldConsoleError && _oldConsoleError.apply(window, arguments);
+        _oldConsoleError && _oldConsoleError.apply(_window, arguments);
     };
 }
 

@@ -1,5 +1,5 @@
 ### 概述
-实现前端JS监控
+实现前端JS监控，监控window.onerror，资源加载错误，跨域js错误，ajax请求错误以及捕获vue的errorHandler错误等上报，自定义sendError上报方法
 
 ## 开发
 
