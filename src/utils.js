@@ -99,16 +99,27 @@ var _handleFetchError = function (_window, config) {
     _window.fetch = function () {
         return _oldFetch.apply(this, arguments)
         .then(res => {
+            if (!res.ok) { // True if status is HTTP 2xx
+                config.sendError({
+                    title: arguments[0],
+                    msg: JSON.stringify(res),
+                    category: 'ajax',
+                    level: 'error'
+                });
+            }
             return res;
         })
         .catch(error => {
             config.sendError({
                 title: arguments[0],
-                msg: JSON.stringify(error),
+                msg: JSON.stringify({
+                    message: error.message,
+                    stack: error.stack
+                }),
                 category: 'ajax',
                 level: 'error'
             });
-            throw err;  
+            throw error;  
         })
     }
 }
