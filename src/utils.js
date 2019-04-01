@@ -205,7 +205,7 @@ var handleVueError = function (_window, config) {
         });
     
         if (_oldVueError && isFunction(_oldVueError)) {
-          _oldOnError.call(this, error, vm, info);
+            _oldVueError.call(this, error, vm, info);
         }
       };
 }
