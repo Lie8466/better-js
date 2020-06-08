@@ -1,6 +1,6 @@
 {
-  "name": "@liyawei8466/better-js",
-  "version": "1.0.0",
+  "name": "for-better-js",
+  "version": "1.0.1",
   "description": "simple js error handler demo",
   "main": "dist/main.js",
   "scripts": {
@@ -36,5 +36,8 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.1.5"
+  },
+  "directories": {
+    "test": "test"
   }
 }
