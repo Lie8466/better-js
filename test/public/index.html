@@ -6,9 +6,9 @@
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <!--end-->
         <!--start 打包后的js文件// dist/main.js-->
-        <script src="/dist/main.js"></script>
+        <script src="./main.js"></script>
         <!--end-->
-        <!--start init window.betterJs 配置sendError，使用fetch发送错误信息-->       
+        <!--start init window.betterJs 配置sendError，使用fetch发送错误信息-->
         <script>
             window.betterJs.init({
                     vue: true,
@@ -42,10 +42,10 @@
                     }
                 });
                 function handle () {
-                    new Promise((resolve, reject)=>{ 
-                        reject('reject promise'); 
-                    }).then((res)=>{ 
-                    console.log('ok'); 
+                    new Promise((resolve, reject)=>{
+                        reject('reject promise');
+                    }).then((res)=>{
+                    console.log('ok');
                     });
                 }
                 function xhrError () {
@@ -94,22 +94,22 @@
         </style>
     </head>
     <body>
-        <!--start 抛出资源加载错误-->       
+        <!--start 抛出资源加载错误-->
         <script src="/test.js"></script>
         <!--end-->
-        <!--start 抛出windowError--> 
+        <!--start 抛出windowError-->
         <button onclick="test">抛出windowError</button>
         <!--end-->
-        <!--start 抛出xhrError--> 
+        <!--start 抛出xhrError-->
         <button onclick="xhrError()">抛出xhrError</button>
         <!--end-->
-        <!--start 抛出fetchError--> 
+        <!--start 抛出fetchError-->
         <button onclick="fetchError()">抛出fetchError</button>
         <!--end-->
-        <!--start 抛出unhandledrejection--> 
+        <!--start 抛出unhandledrejection-->
         <button type="button" onclick="handle()">unhandledrejection</button>
         <!--end-->
-        <!--start 抛出vue Error--> 
+        <!--start 抛出vue Error-->
         <div id="app">
             <button @click="flag = !flag">vue Error</button>
             <span>{{flag}}</span>

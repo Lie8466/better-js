@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "test": "nodemon test/main.js",
-    "build": "webpack --mode=production"
+    "build": "sh build.sh"
   },
   "repository": {
     "type": "git",
@@ -34,8 +34,8 @@
     "nodemon": "^1.17.3",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.1.5"
+    "webpack": "4.6.0",
+    "webpack-cli": "2.1.5"
   },
   "directories": {
     "test": "test"
