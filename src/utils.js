@@ -6,7 +6,7 @@ function hasKey(object, key) { return Object.prototype.hasOwnProperty.call(objec
 
 function each(obj, callback) {
     var i, j;
-  
+
     if (isUndefined(obj.length)) {
       for (i in obj) {
         if (hasKey(obj, i)) {
@@ -34,7 +34,7 @@ function objectMerge(obj1, obj2) {
 }
 
 var handleWindowError = function (_window, config) {
-    _oldWindowError = _window.onerror;
+    var _oldWindowError = _window.onerror;
     _window.onerror = function (msg, url, line, col, error) {
         if (error && error.stack) {
             config.sendError({
@@ -56,10 +56,10 @@ var handleWindowError = function (_window, config) {
             });
         }
         if (_oldWindowError && isFunction(_oldWindowError)) {
-            windowError && windowError.apply(window, arguments);
+            _oldWindowError && _oldWindowError.apply(window, arguments);
         }
     }
-    
+
 }
 var handleRejectPromise = function (_window, config) {
     _window.addEventListener('unhandledrejection', function (event) {
@@ -81,7 +81,7 @@ var handleResourceError = function (_window, config) {
             var target = event.target || event.srcElement;
             var isElementTarget = target instanceof HTMLScriptElement || target instanceof HTMLLinkElement || target instanceof HTMLImageElement;
             if (!isElementTarget) return; // js error不再处理
-            
+
             var url = target.src || target.href;
             config.sendError({
                 title: target.nodeName,
@@ -119,7 +119,7 @@ var _handleFetchError = function (_window, config) {
                 category: 'ajax',
                 level: 'error'
             });
-            throw error;  
+            throw error;
         })
     }
 }
@@ -133,10 +133,10 @@ var handleAjaxError = function (_window, config) {
 
     // 处理XMLHttpRequest
     if (!_window.XMLHttpRequest) {
-        return;   
-    } 
+        return;
+    }
     var xmlhttp = _window.XMLHttpRequest;
-    
+
     var _oldSend = xmlhttp.prototype.send;
     var _handleEvent = function (event) {
         if (event && event.currentTarget && event.currentTarget.status !== 200) {
@@ -203,7 +203,7 @@ var handleVueError = function (_window, config) {
             category: 'js',
             level: 'error'
         });
-    
+
         if (_oldVueError && isFunction(_oldVueError)) {
             _oldVueError.call(this, error, vm, info);
         }
